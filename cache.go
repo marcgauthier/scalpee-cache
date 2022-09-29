@@ -2,7 +2,6 @@ package cache
 
 import (
 	"errors"
-	"fmt"
 	"sync"
 	"time"
 )
@@ -84,13 +83,11 @@ func (c *CacheObj) Get(key string) (float64, error) {
  */
 func (c *CacheObj) start() {
 
-	fmt.Println("starting cache")
 	for {
 		time.Sleep(time.Second)
 		c.mutex.Lock()
 		for k, i := range c.items {
 			if i.expireTime < time.Now().Unix() {
-				//fmt.Println("removing " + k)
 				delete(c.items, k)
 			}
 		}
